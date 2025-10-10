@@ -131,8 +131,16 @@ Behavior precedence notes:
 Combine with `&`: e.g. `index.html?randomStock=0&quantize=0&calibrateApply=0` reverts to the original fixed uncalibrated base behavior.
 
 #### Reverting to Pre‑Calibration Behavior
-### Keyboard Toggle (Diagnostics)
-When `?calibrate=1` is active, press the `D` key (uppercase or lowercase) to toggle the visibility of the diagnostics debug boxes without reloading. A screen reader announcement (“Diagnostics shown” / “Diagnostics hidden”) confirms the change.
+#### Keyboard Toggle (Diagnostics)
+When `?calibrate=1` is active, press the `D` key (uppercase or lowercase) to toggle the visibility of the diagnostics debug boxes without reloading. A screen reader announcement ("Diagnostics shown" / "Diagnostics hidden") confirms the change.
+
+#### Debug Styles Organization
+For developer convenience, all debug-related CSS styles have been consolidated at the bottom of `style.css` under a dedicated "DEBUG MODE STYLES (?calibrate=1)" section. This includes:
+- Moving jaw positioning line styles (`.moving-jaw-line`)
+- Stock size debug overlays (`.stock-size-debug`, `.stock-diameter-debug`)  
+- Debug state modifiers and animations
+
+This organization makes it easy to locate, modify, and maintain debug-specific styling without hunting through the entire CSS file.
 
 Use: `index.html?calibrateApply=0&calibrate=0` (optionally also `randomStock=0` to remove size variance).
 

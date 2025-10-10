@@ -296,23 +296,35 @@ class DigitalCalipers {
         if (!this.caliperContainer || !this.movingJawLine) return;
 
         // Calculate caliper position mathematically based on this.position
-        // Base position: 174px, each position moves 6px left
-        const baseCaliperLeft = 174;
-        const pixelsPerPosition = 6;
-        const calculatedCaliperLeft = baseCaliperLeft - (this.position * pixelsPerPosition);
+        // FIXED: Match actual CSS positions - position-0: 174px, position-1: 150px (24px jump), then 6px per step
+        const baseCaliperLeft = 174; // position-0 (starting position)
+        let calculatedCaliperLeft;
+
+        if (this.position === 0) {
+            calculatedCaliperLeft = 174; // position-0
+        } else {
+            calculatedCaliperLeft = 150 - ((this.position - 1) * 6); // position-1 starts at 150px, then -6px per step
+        }
 
         // Position the line at the moving jaw (right side of caliper)
         // Using your manually adjusted values but based on calculated position
-        const jawLineLeft = calculatedCaliperLeft + 486; // Your manually tuned offset
+        const jawLineLeft = calculatedCaliperLeft + 570; // Your manually tuned offset
         const jawLineTop = 550; // Your manually tuned vertical position
 
         this.movingJawLine.style.position = 'absolute';
         this.movingJawLine.style.left = jawLineLeft + 'px';
         this.movingJawLine.style.top = jawLineTop + 'px';
         this.movingJawLine.style.display = 'block';
-        this.movingJawLine.style.visibility = 'hidden'; // Hide from users
-        this.movingJawLine.style.opacity = '0'; // Hide from users
         this.movingJawLine.style.zIndex = '15000';
+
+        // Show line only in calibration diagnostics mode
+        if (this.calibrationDiagnostics && !this.calibrationDiagnosticsHidden) {
+            this.movingJawLine.style.visibility = 'visible';
+            this.movingJawLine.style.opacity = '1';
+        } else {
+            this.movingJawLine.style.visibility = 'hidden';
+            this.movingJawLine.style.opacity = '0';
+        }
 
         // Add visual state classes based on game state
         if (this.positioned) {

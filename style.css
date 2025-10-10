@@ -226,55 +226,7 @@ body {
     opacity: 0;
 }
 
-/* Moving jaw positioning line */
-.moving-jaw-line {
-    position: absolute;
-    width: 4px;
-    height: 80px;
-    background: linear-gradient(to bottom,
-            #ff0000 0%,
-            #ff3333 20%,
-            #ff0000 50%,
-            #ff3333 80%,
-            #ff0000 100%);
-    border-radius: 2px;
-    border: 1px solid #ffffff;
-    box-shadow:
-        0 0 6px rgba(255, 0, 0, 0.8),
-        0 0 12px rgba(255, 0, 0, 0.4);
-    z-index: 15000;
-    transition: all 0.3s ease;
-    opacity: 0;
-    /* Hide from users - line still functions for collision detection */
-}
-
-@keyframes jawLinePulse {
-
-    0%,
-    100% {
-        opacity: 1;
-        transform: translateY(-50%) scale(1);
-    }
-
-    50% {
-        opacity: 0.7;
-        transform: translateY(-50%) scale(1.1);
-    }
-}
-
-/* Make the line more prominent when stock is positioned */
-.caliper-container.stock-positioned~.moving-jaw-line {
-    /* Keep line hidden even when stock is positioned */
-    opacity: 0 !important;
-    visibility: hidden !important;
-}
-
-/* Fade the line during success state */
-.caliper-container.measurement-complete~.moving-jaw-line {
-    /* Keep line hidden during success */
-    opacity: 0 !important;
-    visibility: hidden !important;
-}
+/* Moving jaw positioning line - moved to debug section at bottom */
 
 /* Removed .stock-piece (unused element) */
 
@@ -791,41 +743,7 @@ body {
     outline-offset: 2px;
 }
 
-/* Temporary stock size debug box */
-.stock-size-debug {
-    position: absolute;
-    bottom: 24px;
-    left: 24px;
-    font-size: 24px;
-    font-weight: 600;
-    font-family: Arial, sans-serif;
-    padding: 10px 14px;
-    background: rgba(0, 0, 0, 0.65);
-    color: #ffffff;
-    border: 2px solid #ff8c00;
-    border-radius: 8px;
-    z-index: 9000;
-    pointer-events: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.stock-diameter-debug {
-    position: absolute;
-    bottom: 84px;
-    /* 24px + height(approx 52-60) to stack above */
-    left: 24px;
-    font-size: 24px;
-    font-weight: 600;
-    font-family: Arial, sans-serif;
-    padding: 10px 14px;
-    background: rgba(0, 0, 0, 0.65);
-    color: #ffffff;
-    border: 2px solid #00a2ff;
-    border-radius: 8px;
-    z-index: 9000;
-    pointer-events: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
+/* Temporary stock size debug boxes - moved to debug section at bottom */
 
 .help-overlay {
     position: fixed;
@@ -935,4 +853,96 @@ body {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
     }
+}
+
+/* ========================================
+   DEBUG MODE STYLES (?calibrate=1)
+   ======================================== */
+
+/* Moving jaw positioning line - visible only in calibration mode */
+/* Note that positioning of the line is actually in Javascript, currently around line 311 and should have a setting of 570 after the plus sign */
+.moving-jaw-line {
+    position: absolute;
+    width: 4px;
+    height: 80px;
+    background: linear-gradient(to bottom,
+            #ff0000 0%,
+            #ff3333 20%,
+            #ff0000 50%,
+            #ff3333 80%,
+            #ff0000 100%);
+    border-radius: 2px;
+    border: 1px solid #ffffff;
+    box-shadow:
+        0 0 6px rgba(255, 0, 0, 0.8),
+        0 0 12px rgba(255, 0, 0, 0.4);
+    z-index: 15000;
+    transition: all 0.3s ease;
+    opacity: 1;
+    /* Visibility controlled by JavaScript based on calibration mode */
+}
+
+@keyframes jawLinePulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: translateY(-50%) scale(1.1);
+    }
+}
+
+/* Debug jaw line state modifiers */
+.caliper-container.stock-positioned~.moving-jaw-line {
+    /* Keep line hidden even when stock is positioned in normal play */
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.caliper-container.measurement-complete~.moving-jaw-line {
+    /* Keep line hidden during success in normal play */
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Stock size debug overlays - visible only in calibration mode */
+.stock-size-debug {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    font-size: 24px;
+    font-weight: 600;
+    font-family: Arial, sans-serif;
+    padding: 10px 14px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #ffffff;
+    border: 2px solid #ff8c00;
+    border-radius: 8px;
+    z-index: 9000;
+    pointer-events: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    /* Shows pixel size and target measurement */
+}
+
+.stock-diameter-debug {
+    position: absolute;
+    bottom: 84px;
+    /* 24px + height(approx 52-60) to stack above stock-size-debug */
+    left: 24px;
+    font-size: 24px;
+    font-weight: 600;
+    font-family: Arial, sans-serif;
+    padding: 10px 14px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #ffffff;
+    border: 2px solid #00a2ff;
+    border-radius: 8px;
+    z-index: 9000;
+    pointer-events: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    /* Shows calibration calculations and deltas */
 }
