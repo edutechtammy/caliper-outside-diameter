@@ -205,9 +205,16 @@ The new version provides:
 - Disable randomization for assessments to ensure uniformity.
 
 ## Future Enhancements
+
+### Planned SVG Rebuild (December 2025)
+- **SVG-based graphics**: Replace PNG images with scalable vector graphics for precise hit detection
+- **Internal diameter measurements**: Add capability to measure inside dimensions
+- **Enhanced positioning accuracy**: Leverage SVG's built-in coordinate system for pixel-perfect alignment
+- **Expanded size ranges**: Remove current PNG-based limitations and support full measurement spectrum
+
+### Additional Features
 - Multiple measurement exercise sets / progression
 - Progress tracking & scoring
-- Additional tools (inside diameter, depth, step)
 - Multi-language / localization support
 - Enhanced analytics (time to measure, attempts)
 - Optional guidance overlays
@@ -229,7 +236,10 @@ The new version provides:
 - Ensure JavaScript is enabled.
 - Confirm URL params aren't conflicting (e.g., extreme `visualCal`).
 - Check console for debug logs when `?debug=1` is used.
-- Verify contact lock isn’t misunderstood: caliper will not close past target once contact is made—open slightly (Left/Open) to re‑approach.
+- Verify contact lock isn't misunderstood: caliper will not close past target once contact is made—open slightly (Left/Open) to re‑approach.
+
+### Known Limitations (Current PNG Version)
+- **Size Range Restriction**: Random stock generation is limited to avoid problematic calibrated values (0.608, 0.640, 0.663 inches) that cause jaw alignment issues with the current PNG-based graphics. The randomization now generates sizes in the range of approximately 0.702-0.936 inches (steps 18-24). This limitation will be addressed in the planned SVG rebuild.
 
 ## Maintenance & Reversion Notes
 - To restore legacy snap-to-target behavior: uncomment the old auto‑snap block in `moveRight()` (currently commented with LEGACY note).

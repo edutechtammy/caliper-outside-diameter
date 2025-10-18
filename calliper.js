@@ -936,8 +936,10 @@ class DigitalCalipers {
         // We want: targetValue = steps * incrementValue (after scaling) and an integral step index alignment.
         // Strategy: pick steps in a band relative to original base target step count.
         const baseStepsApprox = Math.round(this.baseTargetValue / this.baseIncrementValue); // ~22
-        // Allow a range around this (e.g., 14–26) to provide variety but stay within maxPosition.
-        const minSteps = 14;
+        // Allow a range around this (e.g., 18–24) to provide variety but stay within maxPosition.
+        // PRODUCTION FIX: Raised minSteps from 14 to 18 to avoid problematic calibrated values
+        // (0.608, 0.640, 0.663) which correspond to steps 15-17 and cause jaw alignment issues
+        const minSteps = 18;
         // Reduce maximum steps so largest diameter (near upper bound) is excluded
         const maxSteps = Math.min(this.maxPosition - 1, 24); // was 26
         const steps = Math.floor(minSteps + Math.random() * (maxSteps - minSteps + 1));
